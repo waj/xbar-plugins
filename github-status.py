@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# <xbar.var>string(VAR_ACCESS_TOKEN=""): GitHub access token</xbar.var>
+# <xbar.var>string(VAR_FILTERS=""): Optional filters</xbar.var>
+
 from urllib.request import Request, urlopen
-import configparser
 import datetime
 import json
 import os
-import os.path
-import subprocess
 import sys
 
 CONFIG_PATH = '~/.xbar.cfg'
@@ -175,29 +175,11 @@ def title(label, href):
   print_line(label, size=16, color='#000000', href=href, font='"Arial Bold"')
 
 if __name__ == '__main__':
-  # Read configuration file
-  config = configparser.ConfigParser()
-  if not any(config.read(os.path.expanduser(CONFIG_PATH))):
-    config_error('Could not find configuration file: ' + CONFIG_PATH)
-  if not 'github-status' in config:
-    config_error('Could not find [github-status] section in config file: ' + CONFIG_PATH)
-  config = config['github-status']
-
-  if not 'access_token' in config:
-    config_error('Please provide an access_token in the config file: ' + CONFIG_PATH)
-  ACCESS_TOKEN = config['access_token']
-  if ACCESS_TOKEN == 'from-keychain':
-    security_result = subprocess.run(['security', 'find-generic-password', '-s', 'xbar.github-status.token', '-w'], stdout=subprocess.PIPE)
-    ACCESS_TOKEN = security_result.stdout.decode('utf-8').rstrip('\n')
-
-  if 'filters' in config:
-    FILTERS = config['filters']
-  else:
-    FILTERS = ''
+  ACCESS_TOKEN = os.environ["VAR_ACCESS_TOKEN"]
+  FILTERS = os.environ["VAR_FILTERS"]
 
   if not all([ACCESS_TOKEN]):
     config_error('ACCESS_TOKEN could not be found')
-  # END CONFIG
 
   bulk_query = '''
   {
