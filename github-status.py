@@ -222,11 +222,11 @@ if __name__ == '__main__':
   print_line('#%s' % (data['prs']['issueCount'] + data['rev_prs']['issueCount'] + data['issues']['issueCount']))
   print_line('---')
 
-  title("PRs", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me" + '+' + FILTERS)
+  title("Awaiting Review", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me" + '+' + FILTERS)
   print_items(data['prs'])
   print_line('---')
 
-  title("Reviewing PRs", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me+reviewed-by%3A%40me" + '+' + FILTERS)
+  title("Reviewing", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me+reviewed-by%3A%40me" + '+' + FILTERS)
   print_items(data['rev_prs'])
   print_line('---')
 
