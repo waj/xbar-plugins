@@ -39,6 +39,11 @@ base_query = '''
               commit {
                 status {
                   state
+                  contexts {
+                    context
+                    state
+                    targetUrl
+                  }
                 }
               }
             }
@@ -99,6 +104,9 @@ state_icons = {
 
 pr_icon = 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAATmVYSWZNTQAqAAAACAAEARoABQAAAAEAAAA+ARsABQAAAAEAAABGASgAAwAAAAEAAgAAAhMAAwAAAAEAAQAAAAAAAAAAAJAAAAABAAAAkAAAAAElr9YpAAAAmVBMVEUAAAAAgEAzZjMrgCskbUkggEAccTkXdC4VgEAUdjsbgDcaezUYgDgbgDYafjgagDcafjYagDYafjgagDcZfjcZgDYbfjgafjYagDgbfzgbgDcbfzcbgDcagDcafzcagDcZfzcbgDYafzcbfzgafzcagDcagDcafzcagDYagDcafzcafzcagDcagDcagDcafzcafzcagDYafzceaXBUAAAAMnRSTlMABAUGBwgJCwwNHB0gTE10dXZ3eHl6e3+Ahayttrq9vr/A0dPV1tjb3N7f7e7y9PX3+D/nbS4AAADOSURBVDiN7ZLHEoJAEERXQMSsBLOCGbP2/3+couMsDmiVnu3bvn4FzDJKfZ/aIIOMbox106Z+C9mbUyQZF6nPCB4e6VGfETaAXwqAmPpbjlEjJZwBR5WBi1JDcPpaWAKB0wHm+glJ6iz4RDz9DZURELJgR/c+LKSmqAIH/Q47maNbfLkHMUz6+LjJD0Iu+QtJrNbt2LLUO0IrF5ncC9Kh3+2zIMiKVm7JgiB7WrkdC4I8V27BgiDPlXNZEMQI76eJwYIkpjs7zdp6yjzye672ejeZwDxI5AAAAABJRU5ErkJggg=='
 draft_icon = 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAwFBMVEUAAABmZmZVVVVJbW1VVXFNZmZdXXRVampOYmJVXmZaY2tWX2xVYmpYYGlXYWpXYGlYX2tXYGpYYWpXYGtWX2pYYGlXYGpWYWlYYGtXX2pWYGpYYGpXYWtWYGpXYGpWYGpXX2pXYGpWYGtXYWpXYGlYYGpXYGpYYWpXYGpXYGpXYGpXYGtXYWpXYGpXYGpXX2pXYGlXYGpWYGpXYGpXYGtXYGpXYGpXYGpXX2pXYGpXYGpXYGpXYGtXYGpXYGr///+e9zHbAAAAPnRSTlMABQYHCQoLDA0eHzs8PWxtbm9xdXZ3eHl6e3+AgYK5uru8vb6/wMXGx9HS1dbY2tvc5Obn7e7v8vP09fj5/s0fmqMAAAABYktHRD8+YzB1AAAATmVYSWZNTQAqAAAACAAEARoABQAAAAEAAAA+ARsABQAAAAEAAABGASgAAwAAAAEAAgAAAhMAAwAAAAEAAQAAAAAAAAAAAJAAAAABAAAAkAAAAAElr9YpAAAA+klEQVQ4y62T1xKCQAxFAbH3gl2xKzawN8z/f5ZxyY6LyM44mqfk5rBkw0VR/hGR6vxiGZHQvjaGZwzVMKAOXtREMdW/9JKUL7EXQ2opAn18wqT8CBBXEgB7ETgjcKJ8BVCPNwAWItATTuAzVH0zmOcun0Ebsf5ADd9DGftlTbYqBOS7/ABkS1kpUEQpLwN2KO1kwBaljQwoANxz0iEzpfSP1/wK8Fbts1y047hOW/dZbiR8jOiMSVOPaAQt1yGpxQ3zbjmHJJtVh6DlXJJu3LTvlnNIWrOqRi80XkCbpCar1GHAcvqUSRN+T8O6WhWf5fSW7dpN/S9/9gPOfzauOQIMxAAAAABJRU5ErkJggg=='
+danger_icon = 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiNjZjIyMmUiIHZpZXdCb3g9IjAgMCAxNiAxNiIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zLjcyIDMuNzJhLjc1Ljc1IDAgMDExLjA2IDBMOCA2Ljk0bDMuMjItMy4yMmEuNzUuNzUgMCAxMTEuMDYgMS4wNkw5LjA2IDhsMy4yMiAzLjIyYS43NS43NSAwIDExLTEuMDYgMS4wNkw4IDkuMDZsLTMuMjIgMy4yMmEuNzUuNzUgMCAwMS0xLjA2LTEuMDZMNi45NCA4IDMuNzIgNC43OGEuNzUuNzUgMCAwMTAtMS4wNnoiPjwvcGF0aD48L3N2Zz4K'
+success_icon = 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiMxYTdmMzciIHZpZXdCb3g9IjAgMCAxNiAxNiIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy43OCA0LjIyYS43NS43NSAwIDAxMCAxLjA2bC03LjI1IDcuMjVhLjc1Ljc1IDAgMDEtMS4wNiAwTDIuMjIgOS4yOGEuNzUuNzUgMCAwMTEuMDYtMS4wNkw2IDEwLjk0bDYuNzItNi43MmEuNzUuNzUgMCAwMTEuMDYgMHoiPjwvcGF0aD48L3N2Zz4K'
+pending_icon = 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0iI2JmODcwMCIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGFyaWEtaGlkZGVuPSJ0cnVlIj48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik04IDRhNCA0IDAgMTAwIDggNCA0IDAgMDAwLTh6Ij48L3BhdGg+PC9zdmc+Cg=='
 
 def config_error(msg):
   print_line('⚠ Github review requests', color='red')
@@ -169,7 +177,21 @@ def print_items(response, show_review_status = False):
     icon = draft_icon if pr['isDraft'] else pr_icon
 
     print_line(title, size=16, color=title_color, href=pr['url'], image=icon)
+    print_contexts(pr)
     print_line(subtitle, size=12, color=subtitle_color)
+
+def print_contexts(pr):
+  status = pr['commits']['nodes'][0]['commit']['status']
+  if status:
+    contexts = status['contexts']
+    for context in contexts:
+      if context['state'] == 'PENDING':
+        context_icon = pending_icon
+      elif context['state'] == 'SUCCESS':
+        context_icon = success_icon
+      else:
+        context_icon = danger_icon
+      print_line("-- %s" % context['context'], href=context['targetUrl'], image=context_icon)
 
 def title(label, href):
   print_line(label, size=16, color='#000000', href=href, font='"Arial Bold"')
