@@ -206,12 +206,14 @@ if __name__ == '__main__':
   bulk_query = '''
   {
     prs: %(prs_query)s
+    reviewed_prs: %(reviewed_prs_query)s
     rev_prs: %(rev_prs_query)s
     issues: %(issues_query)s
     my_prs: %(my_prs_query)s
   }
   ''' % {
     'prs_query': query('type:pr state:open review-requested:@me'),
+    'reviewed_prs_query': query('type:pr state:open reviewed-by:@me review:approved'),
     'rev_prs_query': query('type:pr state:open reviewed-by:@me review:none'),
     'issues_query': query('type:issue state:open assignee:@me'),
     'my_prs_query': query('type:pr state:open author:@me'),
@@ -224,6 +226,10 @@ if __name__ == '__main__':
 
   title("Awaiting Review", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me" + '+' + FILTERS)
   print_items(data['prs'])
+  print_line('---')
+
+  title("Reviewed", "https://github.com/pulls?q=is%3Aopen+is%3Apr+reviewed-by%3A%40me" + '+' + FILTERS)
+  print_items(data['reviewed_prs'])
   print_line('---')
 
   title("Reviewing", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me+reviewed-by%3A%40me" + '+' + FILTERS)
