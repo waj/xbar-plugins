@@ -19,6 +19,7 @@ base_query = '''
     edges {
       node {
         ... on PullRequest {
+          number
           repository {
             nameWithOwner
           }
@@ -67,6 +68,7 @@ base_query = '''
           isDraft
         }
         ... on Issue {
+          number
           repository {
             nameWithOwner
           }
@@ -180,6 +182,9 @@ def print_items(response, show_review_status = False):
     print_contexts(pr)
     print_line(subtitle, size=12, color=subtitle_color)
 
+def item_numbers(response):
+  return [r['node']['number'] for r in response['edges']]
+
 def print_contexts(pr):
   status = pr['commits']['nodes'][0]['commit']['status']
   if status:
@@ -220,8 +225,9 @@ if __name__ == '__main__':
   }
   response = execute_query(bulk_query)
   data = response['data']
+  counted_items = item_numbers(data['prs']) + item_numbers(data['rev_prs']) + item_numbers(data['issues'])
 
-  print_line('#%s' % (data['prs']['issueCount'] + data['rev_prs']['issueCount'] + data['issues']['issueCount']))
+  print_line('#%s' % len(set(counted_items)))
   print_line('---')
 
   title("Awaiting Review", "https://github.com/pulls?q=is%3Aopen+is%3Apr+review-requested%3A%40me" + '+' + FILTERS)
